@@ -10,8 +10,9 @@ What this reader cares about, in rough order:
 4. Access routes — API relays and proxies, regional availability, account bans, key revocation.
 5. Open-weight models that can realistically be run or self-hosted.
 6. GitHub projects that are newly trending or that ship a meaningful new capability.
+7. AI put to work on physical hardware — microcontroller and single-board projects (ESP32, Raspberry Pi and similar), emulation and platform ports that make one device run another platform's software, and any project where a model visibly makes a device do something it could not do before.
 
-What this reader does not care about: infrastructure and operations (servers, containers, networking hardware), consumer devices, general software-engineering practice, academic papers without a usable release, and funding or personnel news unless it changes what a product can do or what it costs.
+What this reader does not care about: server and datacenter operations, container and network plumbing, consumer device reviews and shopping news, general software-engineering practice, academic papers without a usable release, and funding or personnel news unless it changes what a product can do or what it costs.
 
 # Scoring rubric
 
@@ -26,6 +27,8 @@ What this reader does not care about: infrastructure and operations (servers, co
 Weight concrete, checkable change over commentary: a stated price, quota, version number, availability change or benchmark result outranks an opinion piece about the same event. Reports of throttling, silent downgrades, bans or quota cuts are substantive when they carry reproducible evidence, and should not be dismissed as complaints.
 
 Judge relevance to this reader before judging general importance. A technically impressive infrastructure or systems story that changes nothing about which model to use or what it costs belongs at 3-4, not 8.
+
+Hardware and emulation stories are scored on whether the artifact runs. A published project with source code, a parts list or install steps, and evidence that it works scores 7-8 even when the subject is not an AI model. A demo video with no code, a vendor concept render, or a port that only runs on hardware almost nobody owns scores 3-4.
 
 Do not reward hype, do not treat popularity as importance, and do not raise a score because a subject is broadly discussed.
 
