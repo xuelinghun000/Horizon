@@ -1,9 +1,9 @@
 {
   "ai": {
     "provider": "deepseek",
-    "model": "glm-5.3-flash",
-    "base_url": "https://www.dmxapi.cn/v1",
-    "api_key_env": "DEEPSEEK_API_KEY",
+    "model": "deepseek-v4.1-flash:1017-cloud",
+    "base_url": "https://ollama.com/v1",
+    "api_key_env": "OLLAMA_API_KEY",
     "temperature": 0.3,
     "max_tokens": 8192,
     "throttle_sec": 1,
