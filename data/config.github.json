@@ -197,6 +197,34 @@
         "enabled": true,
         "category": "ai-analysis",
         "profile": "tech-news"
+      },
+      {
+        "name": "CNX Software",
+        "url": "https://www.cnx-software.com/feed/",
+        "enabled": true,
+        "category": "embedded-hardware",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Hackaday",
+        "url": "https://hackaday.com/blog/feed/",
+        "enabled": true,
+        "category": "hardware-hacks",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Habr AI",
+        "url": "https://habr.com/ru/rss/hub/artificial_intelligence/?fl=ru",
+        "enabled": true,
+        "category": "ai-news",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Habr DIY",
+        "url": "https://habr.com/ru/rss/hubs/DIY/?fl=ru",
+        "enabled": true,
+        "category": "hardware-hacks",
+        "profile": "tech-news"
       }
     ],
     "reddit": {
@@ -246,6 +274,24 @@
           "fetch_limit": 10,
           "min_score": 60,
           "profile": "tech-news"
+        },
+        {
+          "subreddit": "esp32",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 40,
+          "profile": "tech-news"
+        },
+        {
+          "subreddit": "emulation",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 40,
+          "profile": "tech-news"
         }
       ],
       "users": [],
@@ -281,6 +327,22 @@
         },
         {
           "channel": "aipluscn",
+          "enabled": true,
+          "fetch_limit": 20,
+          "profile": [
+            "tech-news"
+          ]
+        },
+        {
+          "channel": "ai_newz",
+          "enabled": true,
+          "fetch_limit": 20,
+          "profile": [
+            "tech-news"
+          ]
+        },
+        {
+          "channel": "techsparks",
           "enabled": true,
           "fetch_limit": 20,
           "profile": [
