@@ -60,6 +60,20 @@
         "repo": "triton",
         "enabled": true,
         "profile": "tech-news"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "QuantumNous",
+        "repo": "new-api",
+        "enabled": true,
+        "profile": "tech-news"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "ding113",
+        "repo": "claude-code-hub",
+        "enabled": true,
+        "profile": "tech-news"
       }
     ],
     "hackernews": {
@@ -87,7 +101,7 @@
       {
         "name": "Sean Goedecke",
         "url": "https://www.seangoedecke.com/rss.xml",
-        "enabled": true,
+        "enabled": false,
         "category": "software-engineering",
         "profile": "tech-blog",
         "content_extractor": "trafilatura"
@@ -95,7 +109,7 @@
       {
         "name": "CNBC Finance",
         "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664",
-        "enabled": true,
+        "enabled": false,
         "category": "finance",
         "profile": "finance-news",
         "content_extractor": "trafilatura"
@@ -117,8 +131,50 @@
       {
         "name": "LWN.net",
         "url": "https://lwn.net/headlines/full_text?key=${LWN_KEY}",
-        "enabled": true,
+        "enabled": false,
         "category": "linux-kernel",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Hugging Face Blog",
+        "url": "https://huggingface.co/blog/feed.xml",
+        "enabled": true,
+        "category": "ai-models",
+        "profile": "tech-news"
+      },
+      {
+        "name": "OpenAI News",
+        "url": "https://openai.com/news/rss.xml",
+        "enabled": true,
+        "category": "ai-models",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Google AI Blog",
+        "url": "https://blog.google/innovation-and-ai/technology/ai/rss/",
+        "enabled": true,
+        "category": "ai-models",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Import AI",
+        "url": "https://importai.substack.com/feed",
+        "enabled": true,
+        "category": "ai-analysis",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Interconnects",
+        "url": "https://www.interconnects.ai/feed",
+        "enabled": true,
+        "category": "ai-analysis",
+        "profile": "tech-news"
+      },
+      {
+        "name": "Ahead of AI",
+        "url": "https://magazine.sebastianraschka.com/feed",
+        "enabled": true,
+        "category": "ai-analysis",
         "profile": "tech-news"
       }
     ],
@@ -142,6 +198,33 @@
           "fetch_limit": 10,
           "min_score": 60,
           "profile": "tech-news"
+        },
+        {
+          "subreddit": "ClaudeAI",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 60,
+          "profile": "tech-news"
+        },
+        {
+          "subreddit": "ClaudeCode",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 60,
+          "profile": "tech-news"
+        },
+        {
+          "subreddit": "LLMDevs",
+          "enabled": true,
+          "sort": "hot",
+          "time_filter": "day",
+          "fetch_limit": 10,
+          "min_score": 60,
+          "profile": "tech-news"
         }
       ],
       "users": [],
@@ -154,7 +237,18 @@
           "channel": "zaihuapd",
           "enabled": true,
           "fetch_limit": 20,
-          "profile": ["tech-news", "finance-news"]
+          "profile": [
+            "tech-news",
+            "finance-news"
+          ]
+        },
+        {
+          "channel": "linuxdo_tg",
+          "enabled": true,
+          "fetch_limit": 20,
+          "profile": [
+            "tech-news"
+          ]
         }
       ]
     }
