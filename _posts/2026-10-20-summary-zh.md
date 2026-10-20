@@ -5,136 +5,176 @@ date: 2026-10-20
 lang: zh
 ---
 
-> 从 56 条内容中筛选出 6 条重要资讯。
+> 从 137 条内容中筛选出 7 条重要资讯。
 
 ---
 
 **科技新闻**
-1. [Plex vulnerabilities being exploited in the wild to drop a cryptominer](#item-tech-news-1) ⭐️ 8.0/10
-2. [SemiAnalysis 预测：2027 年数据中心新增用电容量约 50 吉瓦](#item-tech-news-2) ⭐️ 8.0/10
-3. [Wine ported to OpenBSD](#item-tech-news-3) ⭐️ 7.0/10
-4. [开源项目 Mac.apk：无需模拟器在苹果芯片 Mac 上直接运行安卓应用](#item-tech-news-4) ⭐️ 7.0/10
-5. [程序员热议：上线自己没读懂的 AI 代码怎么办](#item-tech-news-5) ⭐️ 7.0/10
-6. [美国国土安全部下令：联邦文职机构禁购并清除 DeepSeek 产品](#item-tech-news-6) ⭐️ 7.0/10
+1. [OpenAI 称新模型大幅提升 COBOL 等冷门语言编程能力](#item-tech-news-1) ⭐️ 8.0/10
+2. [OpenCode 确认遭入侵，约 1.4% 用户 API 密钥可能泄露](#item-tech-news-2) ⭐️ 8.0/10
+3. [小米 MiMo-V2.6-Pro 上线 WorkBuddy，宣称开源模型排名第一](#item-tech-news-3) ⭐️ 7.0/10
+4. [Inception 发布 Mercury 3：生成速度号称超每秒 1000 个文本片段](#item-tech-news-4) ⭐️ 7.0/10
+5. [OpenWrt One 获开源技能包，Claude Code 可协助配置路由器](#item-tech-news-5) ⭐️ 7.0/10
+
+**科技博客**
+1. [vLLM TorchTPU：TPU 上的 vLLM 新后端](#item-tech-blog-1) ⭐️ 4.0/10
+
+**财经新闻**
+1. [工信部收紧汽车产品准入，防范不合理创新设计](#item-finance-news-1) ⭐️ 7.0/10
 
 ---
 
 ## 科技新闻
 
 <a id="item-tech-news-1"></a>
-### [Plex vulnerabilities being exploited in the wild to drop a cryptominer](http://www.boredhackerblog.info/2026/10/plex-vulnerabilities-being-exploited-in.html) ⭐️ 8.0/10
+### [OpenAI 称新模型大幅提升 COBOL 等冷门语言编程能力](https://openai.com/index/low-resource-programming-languages/) ⭐️ 8.0/10
 
-Attackers are exploiting known, unpatched Plex server vulnerabilities in the wild to install cryptominers \(and other payloads\), prompting Plex users to urgently update their media servers.
+一则 Telegram 摘要称，OpenAI 的新模型在 COBOL（大量老旧企业软件仍在使用的编程语言）、Fortran 和 Visual Basic 等冷门语言的开发与迁移上明显进步。该摘要称，在覆盖 20 种编程语言、从零构建 SQLite 引擎（一种小型数据库软件）的测试中，GPT-6 Astra 的平均通过率（测试任务做对的比例）从 GPT-5.6 Sol 的 26.8% 升到 87.4%；低成本版本 GPT-6 Luna 为 40.3%，并称 API（让其他软件调用模型的接口）成本降低 78%，但未说明与哪个模型或档位相比。在把旧 COBOL 代码迁移到现代语言的测试中，GPT-6.1 Sol 在低推理强度（让模型少花计算时间）下准确率从 5.4% 升到 86.6%、成本降低 39%，高推理强度下达到 97.9%；相关评测集（一套固定测试题）已在 GitHub 开源。上述模型名称、分数和降价均来自这则转述，尚未获得独立验证，应视为待确认的说法。
 
-hackernews · mindracer · 10月19日 13:36 · [社区讨论](https://news.ycombinator.com/item?id=50152321)
+telegram · zaihuapd · 10月20日 14:24
 
-**标签**: `#security`, `#plex`, `#vulnerability-exploitation`, `#cryptomining`, `#self-hosting`
+**「背景」** COBOL 是一种老式编程语言，这次评测的核心任务是把现有 COBOL 程序翻译成现代语言，同时保持原有计算和输出完全不变；所谓“低资源语言”，指训练数据少、AI 模型平时很少接触的编程语言。OpenAI 同时公开了评测方法：一套让模型用 20 种语言从零编写兼容 SQLite 的数据库引擎（管理数据的软件）的测试集 MultiLangBench，以及上述 COBOL 迁移测试。
+
+**「实际影响」** 对仍在维护 COBOL 老系统的银行、保险和政府部门来说，这意味着迁移工作可以从“人工逐行重写”变成“模型先改、人来核对”。不过 97.9% 是 OpenAI 在自家评测集上、用最高推理强度跑出的成绩，并不保证你们那套代码也能达到同样水平。比较稳妥的做法是先用这次在 GitHub 开源的评测集（一套公开的测试题）在自家代码上试跑，再决定让模型承担多少工作量。成本也要先算清楚：按第三方平台列出的价格，GPT-6 Sol 每处理一百万输入 token 收 2 美元、每输出一百万 token 收 10 美元（token 是模型计费时按文本片段切分的单位），而追求高准确率需要开启更高的推理强度，费用会随之上升。
+
+<details><summary>参考链接</summary>
+<ul>
+<li><a href="https://openai.com/index/low-resource-programming-languages/">Advancing coding in low‑resource programming languages - OpenAI</a></li>
+<li><a href="https://dataconomy.com/2026/10/20/openai-gpt-6-cobol-coding-migration-gains/">GPT-6.1 Sol scores 97.9% on OpenAI’s COBOL test - Dataconomy</a></li>
+<li><a href="https://aicoder.com/news/news-20261020-openai-multilangbench-cobol-migration-low-resource-languages">OpenAI open-sources MultiLangBench and reports low-resource ...</a></li>
+<li><a href="https://openai.com/index/low-resource-programming-languages/">Advancing coding in low‑resource programming languages | OpenAI</a></li>
+<li><a href="https://openrouter.ai/openai/gpt-6-sol">GPT - 6 Sol - API Pricing &amp; Benchmarks | OpenRouter</a></li>
+
+</ul>
+</details>
+
+**标签**: `#OpenAI`, `#coding models`, `#COBOL`, `#benchmarks`, `#API pricing`
 
 ---
 
 <a id="item-tech-news-2"></a>
-### [SemiAnalysis 预测：2027 年数据中心新增用电容量约 50 吉瓦](https://newsletter.semianalysis.com/p/datacenters-2027-the-year-of-acceleration) ⭐️ 8.0/10
+### [OpenCode 确认遭入侵，约 1.4% 用户 API 密钥可能泄露](https://telegram.me/aipluscn/3135) ⭐️ 8.0/10
 
-行业研究机构 SemiAnalysis 在 2026 年 10 月 19 日发布的分析中预测，数据中心（集中放置服务器、为网站和 AI 服务提供运算能力的设施）的新增容量将在 2027 年加速到约 50 吉瓦（功率单位，衡量设施需要多少电力，1 吉瓦大致相当于一座大型核电机组的输出）。作为判断依据的先行指标（用来提前反映趋势的信号）包括：今年以来各方已签署约 1.3 万亿美元的机房长期租用合同，另有 60 吉瓦容量的数据中心正在建设中。分析认为，目前的短缺集中在电力和机房，接下来可能转移到芯片（尤其是运行 AI 所需的专用处理器）上。需要说明，这是一份预测而非已落成的产能，实际进度仍取决于电力、设备和供应链等条件。
+开源 AI 编程工具 OpenCode 正式确认遭黑客入侵，约 1.4% 的 Console 用户（在 OpenCode 网页控制台注册使用的人）受影响，部分保存在平台上的模型 API 密钥可能已经泄露。API 密钥是调用 OpenAI、Anthropic 等模型服务时用来识别账户并计费的凭证。官方确认之前，已有开发者报告账户出现异常费用，有人损失数百美元，有人称超过 1700 美元。OpenCode 还称事件与一场大规模“蒸馏攻击”（通常指大量调用模型、用其输出来训练另一个模型）有关，但这一说法尚未得到 OpenAI、Anthropic 和谷歌的独立证实，OpenCode 表示正与这三家模型厂商共同处理。
 
-rss · Semianalysis · 10月19日 05:39
+telegram · aipluscn · 10月20日 11:52
 
-**「背景」** 数据中心行业习惯用“吉瓦”（GW，功率单位，1 吉瓦等于 10 亿瓦，大致相当于一座大型核电机组的发电能力）来衡量规模，因为人工智能计算最直接的约束是电力供应。SemiAnalysis 是一家专注芯片与人工智能基础设施研究的机构，这份报告属于对未来的预测，而不是已建成的统计数字。其推算依据之一是所谓“先行指标”：企业会提前数年签下数据中心的长期租约，因此年内签约量被用来推测之后的实际建设节奏。
+**「背景」** OpenCode 是一款开源的 AI 编程工具，主要在命令行（终端）里运行，帮开发者写代码、改代码。它提供的 Console 控制台允许用户把 OpenAI、Anthropic 等模型服务的 API 密钥保存在平台上，省去每次配置的麻烦；这种密钥相当于一串付费调用凭证，谁拿到它，就能用你的账户额度调用模型并产生费用。据外部报道梳理，这次入侵发生在 2026 年 10 月 16 日至 17 日夜间，OpenCode 于 10 月 17 日予以确认。
 
-**「实际影响」** 对使用 AI 服务的普通人来说，数据中心是聊天机器人、云服务这类功能背后的“厂房”：如果预测成真，机房和电力会大幅扩容，但瓶颈可能卡在芯片上——房子盖好了，“发动机”却可能不够，AI 服务的扩容速度仍会受限。对需要租用机房或采购芯片的企业而言，这份报告提示相关资源正被大额长约提前锁定，采购规划可能需要更早启动。
+**「实际影响」** 对把密钥交给第三方编程工具保存的用户，最直接的风险是账单：泄露的密钥可被用来调用模型并产生费用。若你使用 OpenCode 并曾在那里保存 OpenAI 或 Anthropic 的密钥，应尽快在模型厂商后台作废旧密钥、生成新密钥，并核对近期账单。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://newsletter.semianalysis.com/p/datacenters-2027-the-year-of-acceleration">Datacenters 2027: The Year of Acceleration, +50GW in a Single ...</a></li>
-<li><a href="https://aicoder.com/news/news-1792424548152-h6xez">SemiAnalysis Releases Landmark Datacenters 2027 Report: +50GW ...</a></li>
+<li><a href="https://www.explainx.ai/blog/opencode-console-breach-stored-api-keys-distillation-attack-what-to-do-2026">OpenCode Console Breach: Rotate Your API Keys Now (1.4% ...</a></li>
+<li><a href="https://www.cyera.com/blog/opencode-breach-what-happened-and-how-to-rotate-exposed-ai-api-keys">OpenCode Breach: What Happened and How to Rotate Exposed AI ...</a></li>
 
 </ul>
 </details>
 
-**标签**: `#datacenters`, `#AI infrastructure`, `#semiconductors`, `#capacity planning`, `#industry analysis`
+**标签**: `#opencode`, `#security-breach`, `#api-keys`, `#coding-agents`, `#access-restrictions`
 
 ---
 
 <a id="item-tech-news-3"></a>
-### [Wine ported to OpenBSD](https://marc.info/?l=openbsd-ports&amp;m=179236125692175) ⭐️ 7.0/10
+### [小米 MiMo-V2.6-Pro 上线 WorkBuddy，宣称开源模型排名第一](https://weibo.com/6486870325/5356179212995907) ⭐️ 7.0/10
 
-Wine, the Windows application compatibility layer, has been ported to OpenBSD, with the developer sharing technical details and community members demonstrating Windows games running on the OS.
+小米技术宣布，其新模型 Xiaomi MiMo-V2.6-Pro 已在 WorkBuddy 平台上线并开放体验。小米称该模型在 Artificial Analysis 智能指数（一个第三方模型能力排行榜）上获得 46 分，位列全球开源模型第一。它支持 1M 超长上下文（一次可读入约百万字量级的材料），能对图像、视频、音频和文本做联合理解，并支持多个 AI 分工协作完成任务。小米把长任务托管、深度研究、设计出稿、文档办公和小工具开发列为适用场景，但 46 分是厂商自报成绩，目前没有独立验证，也未公布价格、模型权重是否开放下载或接口调用细节。
 
-hackernews · iamnothere · 10月19日 13:35 · [社区讨论](https://news.ycombinator.com/item?id=50152307)
+telegram · zaihuapd · 10月20日 13:40
 
-**标签**: `#OpenBSD`, `#Wine`, `#operating-systems`, `#open-source`, `#compatibility-layer`
+**「背景」** MiMo 是小米自研的大模型系列，V2.6-Pro 是该系列的一个版本；据第三方评测网站 Artificial Analysis 的页面，它在 2026 年 9 月下旬发布，综合智能指数为 46 分，是当时开源权重模型中最高分。这里的“开源权重”指模型参数可以被下载并自行部署运行，而不只是通过厂商的在线接口调用；Artificial Analysis 智能指数则是把多项测试合成一个总分，用来横向比较不同模型。
+
+**「实际使用成本与接入方式」** 对打算上手的人来说，最实际的信息是价格和接入渠道：在第三方模型平台 OpenRouter 上，MiMo-V2.6-Pro 每百万输入 token（模型读写文字的最小计费单位）约 0.41 美元，每百万输出 token 约 0.83 美元，一次可读入约 105 万 token 的内容，适合把整份报告或整个项目文件一次性交给它处理。小米自家开放平台表示，API 价格与上一代 V2.5 持平，并提供 UltraSpeed 模式，输出速度最高可达原来的 20 倍，需要快速出稿的场景可以直接切换。需要注意的是，46 分的榜单成绩由厂商自行公布，选型前最好用自己的实际任务测一遍。
+
+<details><summary>参考链接</summary>
+<ul>
+<li><a href="https://artificialanalysis.ai/models/mimo-v2-6-pro">MiMo-V2.6-Pro Intelligence, Performance &amp; Price Analysis</a></li>
+<li><a href="https://shattered.io/mimo-v2-6-pro-xiaomi-claude-probe-2026/">MiMo-V2.6-Pro Scores 46 as Xiaomi Faces Claude Probe</a></li>
+<li><a href="https://openrouter.ai/xiaomi/mimo-v2.6-pro">MiMo - V 2 . 6 - Pro - API Pricing &amp; Benchmarks | OpenRouter</a></li>
+<li><a href="https://mimo.xiaomi.com/mimo-v2-6">MiMo - V 2 . 6 | Xiaomi</a></li>
+
+</ul>
+</details>
+
+**标签**: `#Xiaomi MiMo`, `#open-weight models`, `#model release`, `#long context`, `#multimodal`
 
 ---
 
 <a id="item-tech-news-4"></a>
-### [开源项目 Mac.apk：无需模拟器在苹果芯片 Mac 上直接运行安卓应用](https://github.com/kksimp/Mac.apk) ⭐️ 7.0/10
+### [Inception 发布 Mercury 3：生成速度号称超每秒 1000 个文本片段](https://telegram.me/aipluscn/3134) ⭐️ 7.0/10
 
-一个名为 Mac.apk 的开源项目（代码公开，任何人可查看和改进）能让安卓应用直接运行在搭载苹果自研芯片的 Mac 电脑上。它不需要模拟器（用软件模拟出一台安卓手机）或虚拟机（在 Mac 里再运行一个完整的虚拟系统），底层也不必借助 Linux 系统（一种常见的开源操作系统）。该项目 2026 年 10 月 19 日登上科技新闻社区 Hacker News，获得 275 个赞和 144 条评论，目前由社区开发者维护、仍处于早期阶段，并非苹果或谷歌的官方功能。评论者指出，依赖谷歌移动服务（不少安卓应用靠它登录账号、接收通知）的应用可能无法正常使用，这会限制项目的实用性。
+据 Telegram 频道 aipluscn 的帖子，Inception 发布了新一代“扩散式”语言模型 Mercury 3，称其生成速度超过每秒 1000 个 token（模型处理文本的基本单位，约等于一个词或词的一部分）。与常见的逐字往后写的模型不同，扩散式模型先形成一份带噪声的草稿，再反复修改成完整文本，因此可以并行生成、追求更高速度。帖子称，Mercury 3 的参数量（衡量模型规模的一个数字）约为前代 Mercury 1 的 40 倍，一次能读入的上下文窗口（文本长度上限）达到 100 万 token，并已上线 Inception 自有 API（让其他软件调用模型的接口）和 OpenRouter（汇集多家模型的调用平台），输入价格为每百万 token 0.2 美元。帖子还称它在多项基准测试（标准化考题）中超过 GPT-6 Luna 和 Claude Haiku 5.5，但没有给出测试细节，这一比较尚未得到独立验证；输出价格也未提及。
 
-hackernews · flocked · 10月19日 16:45 · [社区讨论](https://news.ycombinator.com/item?id=50154624)
+telegram · aipluscn · 10月20日 11:52
 
-**「背景」** 过去想在电脑上运行手机应用，通常要借助“模拟器”或“虚拟机”——这类软件先让电脑假扮成一部安卓手机，再在里面启动应用，代价是速度慢、画面和操作常常不跟手。转机来自芯片：2020 年后的 Mac 改用苹果自研的 Apple Silicon 芯片，它与安卓手机芯片同属一个设计家族（ARM），使用同一套底层指令，因此安卓应用的代码无需翻译就能被芯片直接执行。Mac.apk 正是利用这一点，在 macOS 上直接重建安卓应用的运行环境，让应用作为普通的 Mac 程序启动、由 Mac 的图形芯片负责画面。
+**「背景」** 目前主流的大语言模型是“自回归”式的：像打字一样，一个词元（token，模型读写文字的最小单位）接一个词元往下写，速度受这个节奏限制。扩散式模型换了个做法，先一次性铺出整段文字的草稿，再反复修改定稿，所以在同样的硬件上每秒能产出的内容多得多。Inception 的上一代 Mercury 2.5 已经主打速度，公司博客称其在常见的英伟达显卡上达到每秒约 1100 个词元、上下文 26 万个词元；这次 Mercury 3 的主要变化是规模（参数约为 Mercury 1 的 40 倍）和上下文长度（100 万个词元）。
 
-**「实际影响」** 对想在 Mac 上使用手机应用的人来说，最直接的收益是能运行那些没有 Mac 版的安卓应用。有用户举例：在 Mac 上运行安卓版《我的世界》基岩版（手机和游戏机通用的版本），就能和手机、游戏机上的朋友联机。动手前需留意兼容性：依赖谷歌移动服务的应用可能无法正常运行，建议先确认自己要用的应用是否有此依赖。
-
-**「社区讨论」** 评论中的主要批评有两点：一是项目把应用数据存在应用文件内部，而不是 Mac 系统惯用的数据文件夹，被认为不合常规；二是项目说明文档的行文被指带有明显的 AI 生成痕迹，让部分人对项目质量有所保留。也有评论者肯定其价值，认为尽管有这些短板，项目依然很酷、有实际用处。
+**「影响」** 对需要大量生成文本的开发者和产品团队，最直接的变化是同样时间可产出更多内容，且输入成本标为每百万 token 0.2 美元；但帖子没有给出输出价格、调用频率限制或稳定性数据，基准优势也未经验证，实际选型前应先用自有任务测试速度和准确率。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://github.com/kksimp/Mac.apk">GitHub - kksimp/Mac.apk: Mac.apk: Run Android apps natively ...</a></li>
-<li><a href="https://daily.dev/posts/android-apps-running-native-on-macos-gcspqvspy">Android apps running native on macOS - daily.dev</a></li>
+<li><a href="https://www.inceptionlabs.ai/blog/introducing-mercury-2-5">Introducing Mercury 2 .5 – Inception</a></li>
 
 </ul>
 </details>
 
-**标签**: `#android`, `#macos`, `#apple-silicon`, `#open-source`, `#runtime`
+**标签**: `#diffusion-LLM`, `#model-release`, `#pricing`, `#API-access`, `#high-throughput`
 
 ---
 
 <a id="item-tech-news-5"></a>
-### [程序员热议：上线自己没读懂的 AI 代码怎么办](https://news.ycombinator.com/item?id=50151036) ⭐️ 7.0/10
+### [OpenWrt One 获开源技能包，Claude Code 可协助配置路由器](https://github.com/1507078/openwrt-one-skills) ⭐️ 7.0/10
 
-一位 Meta 工程师在社交平台发文说，如今大量用 AI（大语言模型，能根据描述自动生成代码的工具）写代码，快到来不及逐行检查，结果自己搭建的系统只有大概轮廓清楚，细节却说不明白，这让他感到不安。这条帖子在程序员社区 Hacker News 引发热议，获得 294 个点赞和 439 条评论。讨论的核心是：当 AI 替人写代码成为常态，工程师到底需要理解多少代码、又由谁为后果负责。这目前是一场行业内部的观点争论，而不是某家公司的新政策或新产品发布。
+开发者 1507078 在 GitHub 发布了一个采用 MIT 许可（允许自由使用和修改的开源许可证）的项目 openwrt-one-skills，为 OpenWrt One（一款出厂预装 OpenWrt 开源路由器系统的家用路由器）提供一套 Agent Skills（让 AI 助手按预设步骤操作设备的技能包格式）。这套技能可被 Claude Code、Codex 等能读取该格式的 AI 编程助手调用，包含三个部分：首次开机时清点设备并做只读备份、把路由器配置为家庭主路由、以及排查网速瓶颈。首次开机检查和瓶颈排查只查看、不修改配置；配置主路由的技能会改动 WAN（宽带入户接口）、Wi-Fi 等设置，并验证改动是否生效。项目称已在运行 OpenWrt 25.12.4 固件（路由器内置的系统软件）的真实 OpenWrt One 上验证，但适用范围仅限这款路由器，普通家用路由器通常只提供手机 App 和网页设置页，没有 shell（命令行操作界面）可供 AI 登录和诊断。
 
-hackernews · rzk · 10月19日 11:24
+telegram · aipluscn · 10月20日 12:44
 
-**「背景」** 大型语言模型（根据文字指令生成内容的软件）如今能按工程师的描述直接写出程序代码，越来越多的公司把“让 AI 写代码、人来审核”当作日常工作方式。发帖所引用的作者、Meta 工程师 Ali Hamie 在另一则帖子中称，过去三个月他没有手动写过一行代码，但提交的代码量可能超过此前一整年的总和。这种“只把握大概、不逐行理解”的写法，正是这轮讨论的起点。
+**「背景」** OpenWrt One 是一款出厂就预装 OpenWrt 系统的路由器；OpenWrt 是开源的路由器固件，相当于可以替换路由器自带系统的软件。Agent Skills 是一种技能包格式，把操作步骤和命令写成文件，供 Claude Code、Codex 这类能执行命令的 AI 编程助手读取和调用。
 
-**「实际影响」** 对使用 AI 编程工具的普通用户来说，这意味着他们接触到的软件和网站，作者本人可能也无法解释其中的每个细节，出问题时排查可能更慢。文中提到的普遍做法是把更多精力转向测试（反复运行程序、确认结果正确），但社区提醒测试只能发现问题，不能代替对代码的理解。
+**「实际影响」** 对 OpenWrt One 用户来说，这个项目可以当作让 AI 协助初始化和排障的现成起点；普通路由器用户不能直接套用，因为技能依赖该型号的 SSH（远程登录命令行）、日志和无线诊断命令。配置类技能会实际改动 WAN 或 Wi-Fi 设置，使用前应先确认备份和恢复方式，或从只读的首次检查和瓶颈排查技能开始。
 
-**「社区讨论」** 社区里形成两种立场：一种主张“先设计、后实现”，即工程师自己定好整体结构和思路，只让 AI 填充具体细节，这样至少知道代码大概怎么运作；另一位资深工程师类比说，这就像过去由资深工程师设计、初级员工实现，现在人人都能当“设计者”。反对者则认为这些做法是在逃避责任，主张上线前必须有人能读懂并解释每一行代码，因为测试无法保证覆盖所有情况。
-
-<details><summary>参考链接</summary>
-<ul>
-<li><a href="https://ca.linkedin.com/in/ali-hamie">Ali Hamie - Software Engineer @ Meta | LinkedIn From Coding to Directing: Leveraging AI in ... - LinkedIn Ali Hamie’s Post - LinkedIn Meta Engineers Now Direct AI Code Generation | Ali Hamie ... From Code to AI Management: Evolving Software Engineer Role Ask HN: How to deal with shipping AI-written code you don&#x27;t ...</a></li>
-<li><a href="https://www.linkedin.com/posts/ali-hamie_in-the-past-3-months-at-meta-i-havent-written-activity-7443757855276716032-hrCH">From Coding to Directing: Leveraging AI in ... - LinkedIn</a></li>
-
-</ul>
-</details>
-
-**标签**: `#ai-generated-code`, `#software-engineering`, `#code-review`, `#developer-practices`, `#llm`
+**标签**: `#Agent Skills`, `#Claude Code`, `#OpenWrt One`, `#home router automation`, `#open-source hardware`
 
 ---
 
-<a id="item-tech-news-6"></a>
-### [美国国土安全部下令：联邦文职机构禁购并清除 DeepSeek 产品](https://www.federalregister.gov/public-inspection/2026-21447/order-exclusion-and-removal-of-deepseek-products-from-federal-civilian-executive-branch-information) ⭐️ 7.0/10
+## 科技博客
 
-美国国土安全部发布命令，将中国人工智能公司深度求索（DeepSeek）及其关联实体的信息技术产品与服务，排除出美国联邦文职行政部门（即除军方和情报机构之外的联邦行政机构）的采购范围。命令依据《联邦采购供应链安全法》（一部用于把被认为有安全风险的产品挡在政府采购之外的美国法律）发布，通知已刊登在《联邦公报》（美国政府发布法规的官方刊物）上。命令还要求各文职机构从现有信息系统中移除所有 DeepSeek 及相关实体的产品，范围延伸到借助 DeepSeek 实现的第三方产品与服务——也就是说，其他公司的产品里只要用到了 DeepSeek，同样受影响。据命令通知，美国国防部与情报机构此前已对 DeepSeek 有类似的使用限制，此次是将禁令扩展到整个文职政府部门。
+<a id="item-tech-blog-1"></a>
+### [vLLM TorchTPU：TPU 上的 vLLM 新后端](https://vllm.ai/blog/2026-10-20-vllm-torchtpu) ⭐️ 4.0/10
 
-telegram · zaihuapd · 10月19日 13:32
+rss · vLLM Blog · 10月20日 00:00
 
-**「背景」** 深度求索（DeepSeek）是一家总部位于杭州的中国人工智能公司。这并非美国政府首次针对它：此前国防部（负责军队事务的部门）与情报界（美国各情报机构的统称）已对 DeepSeek 采取过类似的使用限制，此次命令则把这类限制延伸到了所有文职政府机构。命令所依据的《联邦采购供应链安全法》，是一部授权美国政府将认为存在安全风险的信息技术产品排除出采购范围、并要求从现有系统中移除的法律。
+**「背景」** Inferact 与 Google 团队发布 vLLM TorchTPU，目标是让现有 vLLM 模型代码无需修改即可运行在 Google Cloud TPU 上，同时保留原有的 CLI、OpenAI 兼容服务、调度器和 KV 缓存管理体验。
 
-**「实际影响」** 命令的直接后果落在向美国政府卖软件的公司和联邦文职机构（政府中除军方、情报部门外的行政机构）身上：这些机构需要排查并清除系统里的 DeepSeek 相关产品，而软件公司若在产品中集成了 DeepSeek 的模型（即用这家中国公司训练好的 AI 来提供问答等功能），即使产品挂的是自己的牌子，也会被当作“使用 DeepSeek 实现的第三方产品”一并禁止，需先替换掉相关部分才能继续参与联邦采购。命令只约束政府系统与采购，普通人在自己设备上使用 DeepSeek 应用不受此令直接限制。
+**「方案」** 它被实现为 out-of-tree 的 vLLM 平台插件，安装后通过 vllm.platform\_plugins 入口自动加载。模型走 vLLM 标准 runner，并由 torch.compile\(backend=&quot;tpu&quot;\) 编译到 XLA；每个 TPU 设备拥有独立 worker 进程，设备间通信使用 torch.distributed，而调度器、worker、KV 缓存管理器和 API 服务器均沿用上游 vLLM。TPU 特化工作主要位于注册为自定义算子的 JAX/Pallas 内核中，覆盖 ragged paged attention、MLA、混合线性注意力、融合 MoE，以及 FP8、INT8、MXFP4、NVFP4 量化矩阵乘。作者称六种并行维度均可组合使用，大 MoE 常用数据并行注意力加专家并行，长上下文则用 PCP/DCP 拆分 prefill 和 KV 缓存；借助 TPU Sync 与 KV connector，还可零拷贝卸载 KV 到主机 DRAM，并实现跨主机的分离式 prefill/decode 与传输时重分片。投机解码、前缀缓存、多 LoRA、结构化输出和多模态输入沿用常规 vLLM 开关；TPU v7x 是推荐硬件并在每次 PR 的 CI 中测试，v6e、v5e、v5p 仍属实验性。
+
+**「启示」** 作者将 TorchTPU 的核心价值定位为把 TPU 支持做成 vLLM 的可插拔后端，复用既有模型与 serving 栈，再用 Pallas 内核和 TPU Sync 补齐性能与长上下文能力。不过这是一篇发布说明，未给出基准、实现权衡或限制，实际效果仍需参考其 CI 支持矩阵和后续基准。
+
+**标签**: `#vLLM`, `#TPU inference`, `#Pallas kernels`, `#KV cache offloading`, `#model serving`
+
+---
+
+## 财经新闻
+
+<a id="item-finance-news-1"></a>
+### [工信部收紧汽车产品准入，防范不合理创新设计](https://m.chinanews.com/wap/detail/chs/zw/10717890.shtml) ⭐️ 7.0/10
+
+中国工信部 10 月 20 日表示，将把隐藏式门把手、电吸门、虚拟操纵件等创新设计纳入汽车产品准入管理，并把 22 项推荐性标准升为强制性标准，可靠性测试要求不低于 3 万公里；总工程师王卫明称，对未按要求申报、测试验证不充分的产品不予准入。
+
+telegram · zaihuapd · 10月20日 12:48
+
+**「背景」** 近年来，隐藏式门把手等设计在新能源汽车上越来越常见，行业此前主要依靠推荐性标准进行约束。
+
+**「影响」** 对于将电吸门、零重力座椅等作为“科技豪华”卖点的中高端新能源车企，例如问界 M9、蔚来 ES8、理想 L8/L9 等车型的生产企业，这些配置今后需要按新准入要求调整设计或补充测试验证。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://www.federalregister.gov/public-inspection/2026-21447/order-exclusion-and-removal-of-deepseek-products-from-federal-civilian-executive-branch-information">Federal Register :: Public Inspection: Order: Exclusion and ...</a></li>
-<li><a href="https://articlesaboutai.com/us-deepseek-removal-order-federal-agencies/">US Orders Removal of DeepSeek AI Products From Federal ...</a></li>
+<li><a href="https://www.iautodaily.com/news/review/gongxinbuzhengdunyincangshimenbashounihaixiwangguanguanneixi/">工 信 部 整顿 隐 藏 式 门 把 手 ，你还希望管管哪些鸡肋功能？_ 汽 车 公 社</a></li>
+<li><a href="https://k.sina.com.cn/article_6023189492_1670293f400101k39e.html">k.sina.com.cn/article_6023189492_1670293f400101k39e.html</a></li>
 
 </ul>
 </details>
 
-**标签**: `#AI policy`, `#DeepSeek`, `#government procurement`, `#supply chain security`, `#US-China tech`
+**标签**: `#中国汽车监管`, `#工信部`, `#汽车安全标准`, `#强制性标准`, `#产品准入`
 
 ---

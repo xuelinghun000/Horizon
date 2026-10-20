@@ -5,137 +5,179 @@ date: 2026-10-20
 lang: en
 ---
 
-> From 56 items, 6 important content pieces were selected
+> From 137 items, 7 important content pieces were selected
 
 ---
 
 **Technology News**
-1. [Plex vulnerabilities being exploited in the wild to drop a cryptominer](#item-tech-news-1) ⭐️ 8.0/10
-2. [SemiAnalysis Projects 50 Gigawatts of New Datacenter Capacity in 2027](#item-tech-news-2) ⭐️ 8.0/10
-3. [Wine ported to OpenBSD](#item-tech-news-3) ⭐️ 7.0/10
-4. [Open-source Mac.apk project runs Android apps directly on Apple Silicon Macs, no emulator needed](#item-tech-news-4) ⭐️ 7.0/10
-5. [Engineers split on shipping AI-written code they don&\#x27;t fully understand](#item-tech-news-5) ⭐️ 7.0/10
-6. [US Homeland Security orders DeepSeek products removed from civilian federal agencies](#item-tech-news-6) ⭐️ 7.0/10
+1. [OpenAI models reportedly reach 97.9% accuracy on COBOL migration](#item-tech-news-1) ⭐️ 8.0/10
+2. [OpenCode confirms breach; 1.4% of users&\#x27; model access keys may be exposed](#item-tech-news-2) ⭐️ 8.0/10
+3. [Xiaomi&\#x27;s MiMo-V2.6-Pro model goes live on WorkBuddy](#item-tech-news-3) ⭐️ 7.0/10
+4. [Inception releases Mercury 3, a diffusion language model claiming 1,000+ tokens per second](#item-tech-news-4) ⭐️ 7.0/10
+5. [Open-source kit lets Claude Code configure an OpenWrt One router](#item-tech-news-5) ⭐️ 7.0/10
+
+**Technology Blog**
+1. [vLLM TorchTPU Brings vLLM Serving to Google Cloud TPUs](#item-tech-blog-1) ⭐️ 4.0/10
+
+**Financial News**
+1. [China Tightens Auto Market Entry Rules for Innovative Designs](#item-finance-news-1) ⭐️ 7.0/10
 
 ---
 
 ## Technology News
 
 <a id="item-tech-news-1"></a>
-### [Plex vulnerabilities being exploited in the wild to drop a cryptominer](http://www.boredhackerblog.info/2026/10/plex-vulnerabilities-being-exploited-in.html) ⭐️ 8.0/10
+### [OpenAI models reportedly reach 97.9% accuracy on COBOL migration](https://openai.com/index/low-resource-programming-languages/) ⭐️ 8.0/10
 
-Attackers are exploiting known, unpatched Plex server vulnerabilities in the wild to install cryptominers \(and other payloads\), prompting Plex users to urgently update their media servers.
+A Telegram post summarizing an OpenAI publication says OpenAI&\#x27;s newest models sharply improved coding in rarely used languages such as COBOL \(an old language still running many bank and government systems\), Fortran and Visual Basic — the kind of software that companies struggle to maintain because few programmers learn it. In a test that builds a small database engine \(SQLite\) in 20 languages, a model called &quot;GPT-6 Astra&quot; reportedly raised the average pass rate from 26.8% for &quot;GPT-5.6 Sol&quot; to 87.4%, while the cheaper &quot;GPT-6 Luna&quot; reached 40.3% with API costs \(the per-use fees developers pay to send requests to a model\) down 78%. For converting old COBOL code into modern languages, &quot;GPT-6.1 Sol&quot; reportedly rose from 5.4% to 86.6% accuracy at low reasoning effort \(how much computation the model spends before answering\) with 39% lower cost, and reached 97.9% at high effort; the test set is said to be published openly on GitHub. These figures come from a single Telegram summary, the model names could not be checked against OpenAI&\#x27;s own announcement, and none of the results have been independently measured.
 
-hackernews · mindracer · Oct 19, 13:36 · [Discussion](https://news.ycombinator.com/item?id=50152321)
+telegram · zaihuapd · Oct 20, 14:24
 
-**Tags**: `#security`, `#plex`, `#vulnerability-exploitation`, `#cryptomining`, `#self-hosting`
+**「Background」** COBOL is an older programming language, and AI coding tools have had relatively little example code to learn from, which is what “low-resource” means here. OpenAI’s new MultiLangBench evaluation asks a model to build a small database engine from scratch in each of 20 languages, while a separate COBOL test asks it to translate old programs into five modern languages without changing their behavior, including financial calculations and output formatting.
+
+**「What this means for legacy-code teams」** For the organizations still running COBOL — banks, insurers, government agencies — the practical change is that a large conversion job can now be attempted with a model instead of a hand rewrite, and the cheaper GPT-6 Luna tier is quoted at roughly 78% lower estimated API cost \(the pay-per-request interface programmers use to call a model\) than the previous model, which matters when a migration runs to millions of lines. Budget with the published rates in mind: GPT-6 Sol is listed at $2 per million input tokens and $10 per million output tokens \(tokens are the text chunks a model is billed by\), with a 1.05-million-token context window, meaning it can hold a very large source file in one pass. The 97.9% figure is a benchmark pass rate, not a guarantee, so plan for human review of converted code and test the open-sourced evaluation set against your own codebase before committing to a migration.
+
+<details><summary>References</summary>
+<ul>
+<li><a href="https://dataconomy.com/2026/10/20/openai-gpt-6-cobol-coding-migration-gains/">GPT-6.1 Sol scores 97.9% on OpenAI’s COBOL test - Dataconomy</a></li>
+<li><a href="https://aicoder.com/news/news-20261020-openai-multilangbench-cobol-migration-low-resource-languages">OpenAI open-sources MultiLangBench and reports low-resource ...</a></li>
+<li><a href="https://openai.com/index/low-resource-programming-languages/">Advancing coding in low‑resource programming languages | OpenAI</a></li>
+<li><a href="https://openrouter.ai/openai/gpt-6-sol">GPT - 6 Sol - API Pricing &amp; Benchmarks | OpenRouter</a></li>
+
+</ul>
+</details>
+
+**Tags**: `#OpenAI`, `#coding models`, `#COBOL`, `#benchmarks`, `#API pricing`
 
 ---
 
 <a id="item-tech-news-2"></a>
-### [SemiAnalysis Projects 50 Gigawatts of New Datacenter Capacity in 2027](https://newsletter.semianalysis.com/p/datacenters-2027-the-year-of-acceleration) ⭐️ 8.0/10
+### [OpenCode confirms breach; 1.4% of users&\#x27; model access keys may be exposed](https://telegram.me/aipluscn/3135) ⭐️ 8.0/10
 
-The industry research firm SemiAnalysis projects that datacenters — buildings packed with the computers that run online services and AI — will add roughly 50 gigawatts \(a measure of electrical power; one gigawatt is about the output of a large nuclear reactor\) of new capacity in 2027 alone. The firm counts about 60 gigawatts already under construction and reports roughly $1.3 trillion in datacenter lease contracts signed so far this year — long-term rental commitments that lock in demand before the buildings are finished. SemiAnalysis warns that the next shortage may shift from buildings and power to chips, the specialized processors that run AI. These figures are projections based on the firm&\#x27;s tracking of construction and leasing activity, not capacity already in service.
+OpenCode, an open-source AI coding tool, confirmed that hackers breached its platform and that model access keys \(the credentials that let software call AI models\) stored there may have leaked for about 1.4% of its Console users. Before the confirmation, developers reported unexpected charges on their OpenAI and Anthropic accounts, ranging from hundreds of dollars to more than $1,700. OpenCode said the incident is connected to a “large-scale distillation attack” — a term for attempts to extract a model’s behavior through large numbers of queries — but that description has not been independently confirmed by OpenAI, Anthropic, or Google; OpenCode says it is working with all three.
 
-rss · Semianalysis · Oct 19, 05:39
+telegram · aipluscn · Oct 20, 11:52
 
-**「Background」** Datacenters — the building-sized facilities packed with computers that run AI and online services — are sized by how much electricity they can draw, measured in gigawatts \(GW\); one gigawatt is roughly the output of a large power plant. Because a new facility takes years to plan and build, the long-term rental contracts \(leases\) that cloud and AI companies sign today act as early signals of how much will actually be built years later. Each datacenter also needs a second ingredient — the specialized chips that carry out AI calculations — so a shortage of either buildings-and-power or chips can set the pace of growth.
+**「Background」** OpenCode is an open-source coding assistant that runs in a text command window, and its Console is the web dashboard where users connect accounts from model providers such as OpenAI, Anthropic and Google. External reports date the intrusion to the night of October 16–17, 2026, and say keys saved in affected Console workspaces may have been exposed. OpenCode has described the incident as a “distillation attack” — an attempt to use a model’s outputs to train a competing model — but that label has not been independently confirmed by the model providers.
 
-**「What it means for you」** If chip supply becomes the limiting factor, having more buildings will not automatically mean more AI computing power, so the pace at which AI services expand could slow even as construction booms. Because the $1.3 trillion in leases represents signed commitments rather than running capacity, it is reasonable to treat companies&\#x27; announced AI capacity plans as promises still pending rather than services already available.
+**「What users should do」** For developers who stored model keys in OpenCode, the practical step is to check OpenAI and Anthropic billing for unexpected charges and to revoke and replace any keys kept on the platform; replacing a key makes the old one stop working.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://aicoder.com/news/news-1792424548152-h6xez">SemiAnalysis Releases Landmark Datacenters 2027 Report: +50GW ...</a></li>
+<li><a href="https://www.explainx.ai/blog/opencode-console-breach-stored-api-keys-distillation-attack-what-to-do-2026">OpenCode Console Breach: Rotate Your API Keys Now (1.4% ...</a></li>
+<li><a href="https://cybersecuritynews.com/opencode-security-breach/">OpenCode Security Breach Exposes Third-Party API Keys of its ...</a></li>
+<li><a href="https://www.cyera.com/blog/opencode-breach-what-happened-and-how-to-rotate-exposed-ai-api-keys">OpenCode Breach: What Happened and How to Rotate Exposed AI ...</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#datacenters`, `#AI infrastructure`, `#semiconductors`, `#capacity planning`, `#industry analysis`
+**Tags**: `#opencode`, `#security-breach`, `#api-keys`, `#coding-agents`, `#access-restrictions`
 
 ---
 
 <a id="item-tech-news-3"></a>
-### [Wine ported to OpenBSD](https://marc.info/?l=openbsd-ports&amp;m=179236125692175) ⭐️ 7.0/10
+### [Xiaomi&\#x27;s MiMo-V2.6-Pro model goes live on WorkBuddy](https://weibo.com/6486870325/5356179212995907) ⭐️ 7.0/10
 
-Wine, the Windows application compatibility layer, has been ported to OpenBSD, with the developer sharing technical details and community members demonstrating Windows games running on the OS.
+Xiaomi&\#x27;s technology team announced that its MiMo-V2.6-Pro model is now available on WorkBuddy, and says it can be tried there for free. Xiaomi claims the model scores 46 on the Artificial Analysis intelligence index, a third-party leaderboard that ranks AI models, and that this puts it first among openly available models. The company says it can handle a context window of 1 million tokens \(roughly the amount of text in several long books at once\), understand images, video, audio and text together, and split work across multiple AI agents. Xiaomi lists long-running task management, deep research, design drafts, office documents and small tool-building as target uses. The score is Xiaomi&\#x27;s own claim and has not been independently confirmed, and the announcement gives no pricing, no download links for the model&\#x27;s weights \(the files that would let others run it themselves\) and no details for developers who want to connect to it through software.
 
-hackernews · iamnothere · Oct 19, 13:35 · [Discussion](https://news.ycombinator.com/item?id=50152307)
+telegram · zaihuapd · Oct 20, 13:40
 
-**Tags**: `#OpenBSD`, `#Wine`, `#operating-systems`, `#open-source`, `#compatibility-layer`
+**「Context」** MiMo-V2.6-Pro is not a brand-new model: it first appeared in late September 2026, when it was reported to have scored 46 on the Artificial Analysis Intelligence Index — a public leaderboard that runs a fixed set of tests and ranks models by the results — the highest mark reported for an open-weight model, meaning one whose files are published so others can download and run it themselves. The &quot;1M context&quot; figure describes how much text the model can hold in one session: about one million tokens \(the word fragments models read text in\), roughly hundreds of pages at once. This item is about that model becoming available to try inside WorkBuddy.
+
+**「What it costs to use」** On the model marketplace OpenRouter, MiMo-V2.6-Pro is listed at about $0.41 per million input tokens and $0.83 per million output tokens \(a token is a small chunk of text, roughly a word fragment\), with a context window of 1,050,000 tokens and four providers serving it. Xiaomi says API pricing is unchanged from the previous V2.5 model, so teams already calling that version can switch without reworking their budgets, and an &quot;UltraSpeed&quot; mode claims up to 20 times faster output for tasks where waiting is the bottleneck.
+
+<details><summary>References</summary>
+<ul>
+<li><a href="https://artificialanalysis.ai/models/mimo-v2-6-pro">MiMo-V2.6-Pro Intelligence, Performance &amp; Price Analysis</a></li>
+<li><a href="https://shattered.io/mimo-v2-6-pro-xiaomi-claude-probe-2026/">MiMo-V2.6-Pro Scores 46 as Xiaomi Faces Claude Probe</a></li>
+<li><a href="https://openrouter.ai/xiaomi/mimo-v2.6-pro">MiMo - V 2 . 6 - Pro - API Pricing &amp; Benchmarks | OpenRouter</a></li>
+<li><a href="https://mimo.mi.com/models/en-US/mimo-v2.6-pro">Xiaomi MiMo Home</a></li>
+<li><a href="https://mimo.xiaomi.com/mimo-v2-6">MiMo - V 2 . 6 | Xiaomi</a></li>
+
+</ul>
+</details>
+
+**Tags**: `#Xiaomi MiMo`, `#open-weight models`, `#model release`, `#long context`, `#multimodal`
 
 ---
 
 <a id="item-tech-news-4"></a>
-### [Open-source Mac.apk project runs Android apps directly on Apple Silicon Macs, no emulator needed](https://github.com/kksimp/Mac.apk) ⭐️ 7.0/10
+### [Inception releases Mercury 3, a diffusion language model claiming 1,000+ tokens per second](https://telegram.me/aipluscn/3134) ⭐️ 7.0/10
 
-A community-built, open-source project called Mac.apk \(its code is public on GitHub for anyone to inspect\) lets people run Android phone apps directly on Macs with Apple Silicon chips \(Apple&\#x27;s own processors, such as the M-series\). It needs no emulator \(software that imitates another device\) and no virtual machine \(a separate simulated computer running inside the Mac\); the Android apps run on the Mac&\#x27;s own system. The project drew a busy Hacker News discussion \(275 upvotes, 144 comments\), where early users report real successes — one now plays Minecraft on a Mac with friends on phones and consoles — but also limits: apps that depend on Google Play Services, Google&\#x27;s background software that many Android apps require, may not work. It is an early-stage tool rather than an official product from Apple or Google.
+Inception has released Mercury 3, a language model that generates text differently from most chatbots: rather than writing one word at a time, it fills in a whole block of text at once, an approach called a diffusion model. The company says it produces more than 1,000 tokens per second \(a token is a word fragment, roughly three-quarters of a word\), has about 40 times as many internal parameters as its predecessor Mercury 1, and accepts a context window of 1 million tokens — the amount of text it can take in and keep in mind at once. It is live on Inception&\#x27;s own API \(the paid interface that software uses to call a model\) and on OpenRouter, a marketplace that lets developers reach many models through one account, with input priced at $0.20 per million tokens. The post also says Mercury 3 beats GPT-6 Luna and Claude Haiku 5.5 on several benchmarks, but that comparison is vague and has not been independently verified.
 
-hackernews · flocked · Oct 19, 16:45 · [Discussion](https://news.ycombinator.com/item?id=50154624)
+telegram · aipluscn · Oct 20, 11:52
 
-**「Background」** Android apps are normally built for phones and tablets, and running them on a Mac has traditionally required an emulator \(software that imitates an entire phone, including its processor\) or a virtual machine \(a separate simulated computer running inside your real one\) — approaches that tend to be slow and clunky. The project behind this story, called Mac.apk, takes a different route: it recreates the parts of Android that apps depend on directly on top of macOS, so an app runs as an ordinary Mac program. It uses the Mac&\#x27;s own graphics chip and processor at full speed, and the apps appear in the Dock and behave like regular Mac windows.
+**「Background」** A diffusion language model generates text by refining a whole chunk of text in parallel rather than writing one word at a time, the approach behind its speed. Inception&\#x27;s earlier Mercury 2.5 was listed at 1,107 tokens \(word pieces\) per second, a 260,000-token context window \(how much text the model can consider at once\), and $0.20 per million input tokens versus $0.75 per million output tokens. Mercury 3 is the company&\#x27;s newest model; the source says it expands the context window to about 1 million tokens and uses roughly 40 times as many parameters \(internal settings that roughly track model size\) as Mercury 1.
 
-**「Practical impact」** For Mac users, the concrete payoff is running apps that were previously phone- or console-only: one commenter says the Android version of Minecraft lets them play with friends on consoles and phones without resorting to workarounds like running their own game server. The compatibility caveat matters in practice — before relying on the tool, check whether the specific app you need depends on Google Play Services, since those apps may fail.
-
-**「What readers are saying」** Commenters&\#x27; main criticisms were practical: irskep objected that the project stores each app&\#x27;s data inside the app file itself rather than macOS&\#x27;s standard folder for app data \(Application Support\), calling the project&\#x27;s justification &quot;a false choice,&quot; and bilalq predicted that apps tied to Google&\#x27;s own services will keep the tool less useful than it could be. Several readers, including qalmakka, were more struck by the project&\#x27;s readme — its phrasing \(&quot;No emulator, no virtual machine, no Linux underneath&quot;\) struck them as recognizably AI-written, which they took as a caution about the project&\#x27;s polish rather than its function.
+**「What it means in practice」** The appeal is for work that needs large amounts of text generated quickly — bulk summarization, sorting documents into categories, or automated assistants that call a model many times per task — where the low input price and reported speed matter more than top-end reasoning. Because it is listed on OpenRouter, teams can try it without signing a new contract. Since it is a different kind of model, its output quality on a specific job should be tested against whatever is already in use rather than assumed from the speed and benchmark claims.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://github.com/kksimp/Mac.apk">GitHub - kksimp/Mac.apk: Mac.apk: Run Android apps natively ...</a></li>
-<li><a href="https://daily.dev/posts/android-apps-running-native-on-macos-gcspqvspy">Android apps running native on macOS - daily.dev</a></li>
+<li><a href="https://openrouter.ai/inception/mercury-3">Mercury 3 - API Pricing &amp; Benchmarks | OpenRouter</a></li>
+<li><a href="https://www.inceptionlabs.ai/blog/introducing-mercury-2-5">Introducing Mercury 2 .5 – Inception</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#android`, `#macos`, `#apple-silicon`, `#open-source`, `#runtime`
+**Tags**: `#diffusion-LLM`, `#model-release`, `#pricing`, `#API-access`, `#high-throughput`
 
 ---
 
 <a id="item-tech-news-5"></a>
-### [Engineers split on shipping AI-written code they don&\#x27;t fully understand](https://news.ycombinator.com/item?id=50151036) ⭐️ 7.0/10
+### [Open-source kit lets Claude Code configure an OpenWrt One router](https://github.com/1507078/openwrt-one-skills) ⭐️ 7.0/10
 
-A question posted to Hacker News — a popular online forum for software developers — on October 19, 2026 drew 294 upvotes and 439 comments, asking how engineers should handle releasing code written by AI tools when they don’t fully understand it. The poster quoted a Meta engineer’s LinkedIn post describing coding that now feels like a “black box”: checking every line takes too long, so developers end up knowing a system’s big picture but not its details. Replies split into two camps — some keep control by designing the software’s structure themselves and letting the AI write the actual code, or lean heavily on testing, while others insist at least one person must be able to read and explain every line before it reaches real users. The thread is a practitioner debate rather than a product release or study, but the volume of responses shows how many working engineers are grappling with the question.
+A developer has published an open-source kit that gives AI coding assistants such as Claude Code and Codex a set of Agent Skills for the OpenWrt One, a router that ships with the open-source OpenWrt operating system. Agent Skills are packaged instructions and scripts that an assistant can load and run; the kit is released under the MIT open-source license. The three skills cover first-time setup \(inventorying the device, checking whether official software packages can be installed, and making a backup without changing settings\), setting the router up as a home gateway \(configuring the internet connection, moving from an internet provider&\#x27;s equipment, and setting Wi-Fi, with scripts to check the changes\), and diagnosing network-speed bottlenecks, heat and roaming problems without changing settings. The author says the pack has been tested on an actual OpenWrt One running OpenWrt 25.12.4, the router&\#x27;s operating software.
 
-hackernews · rzk · Oct 19, 11:24
+telegram · aipluscn · Oct 20, 12:44
 
-**「Background」** The discussion stems from a LinkedIn post by Ali Hamie, a software engineer at Meta \(the company behind Facebook and Instagram\), who said he has not manually written a single line of code in three months, instead directing AI tools to write it for him — and that the resulting code now feels like a &quot;black box&quot; he does not fully understand. AI coding assistants \(software that generates program code from plain-language instructions\) have spread quickly enough in workplaces that some engineers now review and release far more code than they personally wrote or read. The Hacker News thread asks what responsibility an engineer still carries when they ship code they could not have checked line by line.
+**「Background」** OpenWrt is a free, open-source operating system for routers, and the OpenWrt One is a router designed to run it, with built-in recovery options such as a backup boot partition and a front USB-C console. Agent Skills is a package format that gives an AI agent task-specific instructions and scripts; Claude Code is Anthropic&\#x27;s terminal-based coding assistant that can read that format. Most home routers expose only a phone app or web settings page, with no command line for an agent to log into, which is why this kind of automation has been rare.
 
-**「Practical impact」** For people who simply use software, the near-term effect is that features may be built faster, but their quality depends on how much teams test what the AI writes instead of reading it line by line. Several commenters said they now redirect time saved on writing code into testing; one reported that an AI review of his own mature code — which he had considered flawless — turned up problems he had missed.
+**「Impact」** The practical effect is limited to people who already own an OpenWrt One: they can try the pack with Claude Code or Codex, but it will not work as-is on ordinary consumer routers, which usually offer only a phone app and a web settings page rather than a command line for an assistant to operate. The setup skill changes internet and Wi-Fi settings, while the first-time and diagnostic skills are described as read-only.
 
-**「What commenters said」** The sharpest pushback came from a commenter who called fellow posters’ avoid-reading habits “horrifying” and argued that someone at every company must be able to explain any code running for real users — automated tests help, he said, but can’t be relied on alone. Against that, a self-described principal engineer \(a senior engineering role\) argued that AI simply lets everyone work the way senior engineers long have: design the system yourself, then let the AI build the details the way junior staff once did.
-
-<details><summary>References</summary>
-<ul>
-<li><a href="https://www.linkedin.com/posts/ali-hamie_im-an-engineer-at-meta-and-i-never-felt-share-7517317918666211328-7C8N">Ali Hamie’s Post - LinkedIn</a></li>
-<li><a href="https://ca.linkedin.com/in/ali-hamie">Ali Hamie - Software Engineer @ Meta | LinkedIn From Coding to Directing: Leveraging AI in ... - LinkedIn Ali Hamie’s Post - LinkedIn Meta Engineers Now Direct AI Code Generation | Ali Hamie ... From Code to AI Management: Evolving Software Engineer Role Ask HN: How to deal with shipping AI-written code you don&#x27;t ...</a></li>
-
-</ul>
-</details>
-
-**Tags**: `#ai-generated-code`, `#software-engineering`, `#code-review`, `#developer-practices`, `#llm`
+**Tags**: `#Agent Skills`, `#Claude Code`, `#OpenWrt One`, `#home router automation`, `#open-source hardware`
 
 ---
 
-<a id="item-tech-news-6"></a>
-### [US Homeland Security orders DeepSeek products removed from civilian federal agencies](https://www.federalregister.gov/public-inspection/2026-21447/order-exclusion-and-removal-of-deepseek-products-from-federal-civilian-executive-branch-information) ⭐️ 7.0/10
+## Technology Blog
 
-The U.S. Department of Homeland Security has issued an order, published in the Federal Register \(the government&\#x27;s official rule-notice publication\), that bars products from the Chinese AI company DeepSeek and its affiliated entities from being purchased by federal civilian agencies, and requires those agencies to remove any DeepSeek products already running in their systems. The order relies on the Federal Acquisition Supply Chain Security Act, a law that lets the government block technology it considers a supply-chain risk \(meaning worry that a component could be compromised or misused by its maker\). Notably, the ban extends beyond DeepSeek&\#x27;s own software to third-party products and services that were built using DeepSeek. This follows similar restrictions the Department of Defense and U.S. intelligence agencies had already placed on DeepSeek; the vendor&\#x27;s claims are a matter of official government action, not a technical evaluation published this week.
+<a id="item-tech-blog-1"></a>
+### [vLLM TorchTPU Brings vLLM Serving to Google Cloud TPUs](https://vllm.ai/blog/2026-10-20-vllm-torchtpu) ⭐️ 4.0/10
 
-telegram · zaihuapd · Oct 19, 13:32
+rss · vLLM Blog · Oct 20, 00:00
 
-**「Background」** DeepSeek \(full company name: Hangzhou DeepSeek Artificial Intelligence Basic Technology Research Co., Ltd.\) is a Chinese company that makes artificial-intelligence products and services, and other companies can build their own software on top of them. The order relies on the Federal Acquisition Supply Chain Security Act, a U.S. law that works like a government-wide do-not-buy list: it lets agencies bar technology considered a supply-chain security risk and requires removing it from systems already in use. According to the source, the Pentagon and U.S. intelligence agencies had already imposed similar restrictions on DeepSeek, so this order extends those limits to the federal government&\#x27;s civilian agencies.
+**「Background」** Inferact and Google have released vLLM TorchTPU, an out-of-tree backend for running vLLM on Google Cloud TPUs while reusing vLLM&\#x27;s existing model definitions. The stated goals are easier TPU onboarding for new models and stronger open-source TPU inference without changing the familiar vLLM interface.
 
-**「What this means in practice」** If your company sells software or services to U.S. federal civilian agencies, you now need to check whether any product relies on DeepSeek \(a Chinese AI company whose models power many chatbots and tools\) — even indirectly, through another vendor — because such products are barred from purchase and must be removed from agency systems. Vendors using DeepSeek models under a different brand name are still covered, so simply relabeling a product does not avoid the order.
+**「Solution」** The plugin is discovered through vllm.platform\_plugins and runs models through vLLM&\#x27;s standard runner, compiling them with torch.compile\(backend=&quot;tpu&quot;\) to XLA; each TPU device gets a worker process, devices communicate via torch.distributed, and the scheduler, KV cache manager, workers, and API server remain upstream vLLM. TPU-specific work sits underneath in JAX/Pallas custom ops for ragged paged attention, dense and sparse MLA, hybrid linear-attention kernels, fused MoE with expert parallelism, and FP8/INT8/MXFP4/NVFP4 matmuls. The author reports support for all six vLLM parallelism dimensions—TP, DP, PP, EP, PCP, and DCP—on single- and multi-host slices, recommending data-parallel attention with expert parallelism for large MoE models and PCP/DCP for long-context prefill and KV cache splitting. Through vLLM&\#x27;s KV connector interface, the TPU Sync C++ library reads device buffers directly to enable zero-copy KV cache offloading to host DRAM and disaggregated prefill/decode with resharding during transfer; speculative decoding and automatic prefix caching, including hybrid-model linear-attention state, are also listed as supported, while TPU v7x is recommended and tested in CI, v6e/v5e/v5p are experimental, and the announcement offers no benchmarks or measured comparisons.
 
-**「What people are saying」** No community comments were available for this item.
+**「Takeaway」** The release positions TorchTPU as a way to extend vLLM&\#x27;s serving stack to TPUs without forking its core, pushing performance work into Pallas kernels and TPU-aware scaling features. Its roadmap—automated model onboarding, cache-aware routing, and broader TorchTPU kernel interfaces—aims at day-one support for new open models rather than a one-off port.
+
+**Tags**: `#vLLM`, `#TPU inference`, `#Pallas kernels`, `#KV cache offloading`, `#model serving`
+
+---
+
+## Financial News
+
+<a id="item-finance-news-1"></a>
+### [China Tightens Auto Market Entry Rules for Innovative Designs](https://m.chinanews.com/wap/detail/chs/zw/10717890.shtml) ⭐️ 7.0/10
+
+China&\#x27;s Ministry of Industry and Information Technology said on Oct. 20 that it will tighten vehicle market entry, bringing hidden door handles, power-closing doors and virtual controls under approval management and converting 22 recommended standards into mandatory ones. The rules also require reliability testing of at least 30,000 km.
+
+telegram · zaihuapd · Oct 20, 12:48
+
+**「Background」** The Ministry of Industry and Information Technology sets China’s vehicle market-access rules, and hidden door handles have become increasingly common on new-energy cars there in recent years.
+
+**「Impact」** Automakers that fit power-closing doors and zero-gravity seats to mid-to-high-end models priced at 200,000–500,000 yuan—including AITO, NIO and Li Auto—will need to modify or re-test those features to meet the new anti-pinch and in-motion restrictions.
 
 <details><summary>References</summary>
 <ul>
-<li><a href="https://public-inspection.federalregister.gov/2026-21447.pdf">DEPARTMENT OF HOMELAND SECURITY Procurements Notice of Order ...</a></li>
-<li><a href="https://articlesaboutai.com/us-deepseek-removal-order-federal-agencies/">US Orders Removal of DeepSeek AI Products From Federal ...</a></li>
+<li><a href="https://www.iautodaily.com/news/review/gongxinbuzhengdunyincangshimenbashounihaixiwangguanguanneixi/">工 信 部 整顿 隐 藏 式 门 把 手 ，你还希望管管哪些鸡肋功能？_ 汽 车 公 社</a></li>
+<li><a href="https://k.sina.com.cn/article_6023189492_1670293f400101k39e.html">k.sina.com.cn/article_6023189492_1670293f400101k39e.html</a></li>
+<li><a href="https://www.163.com/dy/article/L0J5F7KI05148UNS.html">163.com/dy/article/L0J5F7KI05148UNS.html</a></li>
 
 </ul>
 </details>
 
-**Tags**: `#AI policy`, `#DeepSeek`, `#government procurement`, `#supply chain security`, `#US-China tech`
+**Tags**: `#中国汽车监管`, `#工信部`, `#汽车安全标准`, `#强制性标准`, `#产品准入`
 
 ---
