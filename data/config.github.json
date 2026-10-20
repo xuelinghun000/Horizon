@@ -270,6 +270,22 @@
           "profile": [
             "tech-news"
           ]
+        },
+        {
+          "channel": "AI_Copilot_Channel",
+          "enabled": true,
+          "fetch_limit": 20,
+          "profile": [
+            "tech-news"
+          ]
+        },
+        {
+          "channel": "aipluscn",
+          "enabled": true,
+          "fetch_limit": 20,
+          "profile": [
+            "tech-news"
+          ]
         }
       ]
     }
