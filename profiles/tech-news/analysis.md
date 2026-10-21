@@ -17,7 +17,7 @@ What this reader does not care about: server and datacenter operations, containe
 # Scoring rubric
 
 - **9-10: Changes a decision.** A major model release or capability jump from a leading provider; a subscription plan, price, quota or access change that affects many users; a widely felt ban, throttling or downgrade event; a coding tool gaining or losing a capability that changes which tool people pick.
-- **7-8: Worth knowing today.** A meaningful minor version, a single vendor's price or quota adjustment, a useful new tool or open-weight model, or hands-on comparison data that would influence a choice.
+- **7-8: Worth knowing today.** A meaningful minor version, a single vendor's price or quota adjustment, a useful new tool or open-weight model, hands-on comparison data that would influence a choice, or a concrete workflow, prompt, configuration or runnable project the reader could copy today.
 - **5-6: Useful but not urgent.** Routine releases, industry analysis, secondary vendors, incremental tooling improvements.
 - **3-4: Low priority.** Infrastructure and operations, engineering practice unrelated to model choice, research without a usable artifact, policy news with no practical effect on access.
 - **0-2: Noise.** Spam, promotion, off-topic material, trivial updates, and headlines that promise more than the source delivers.
@@ -27,6 +27,8 @@ What this reader does not care about: server and datacenter operations, containe
 Weight concrete, checkable change over commentary: a stated price, quota, version number, availability change or benchmark result outranks an opinion piece about the same event. Reports of throttling, silent downgrades, bans or quota cuts are substantive when they carry reproducible evidence, and should not be dismissed as complaints.
 
 Judge relevance to this reader before judging general importance. A technically impressive infrastructure or systems story that changes nothing about which model to use or what it costs belongs at 3-4, not 8.
+
+How much the reader can act on something outranks how many people it affects. A post that shows a working workflow, prompt, configuration or installable project the reader could copy today belongs at 7-8 even if it reached only one person. A major vendor announcement with nothing the reader can do differently — funding, personnel, stock moves, policy with no impact on access, benchmark claims without reproducible detail — caps at 5 however widely it is discussed.
 
 Hardware and emulation stories are scored on whether the artifact runs. A published project with source code, a parts list or install steps, and evidence that it works scores 7-8 even when the subject is not an AI model. A demo video with no code, a vendor concept render, or a port that only runs on hardware almost nobody owns scores 3-4.
 
