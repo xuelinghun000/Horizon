@@ -7,7 +7,7 @@ on:
     # so reports were labelled with yesterday's date and overwrote the previous
     # day's file. 00:00 UTC = 08:00 Asia/Shanghai keeps the UTC date equal to the
     # Beijing date.
-    - cron: '0 0 * * *'
+    - cron: '7 0 * * *'
   workflow_dispatch:      # Allow manual trigger
 
 jobs:
