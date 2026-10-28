@@ -5,13 +5,31 @@ on:
     # GitHub scheduled workflows use UTC, and Horizon names each report after the
     # UTC date. 23:00 UTC is 07:00 Asia/Shanghai but still the previous UTC day,
     # so reports were labelled with yesterday's date and overwrote the previous
-    # day's file. 00:00 UTC = 08:00 Asia/Shanghai keeps the UTC date equal to the
-    # Beijing date.
-    - cron: '7 0 * * *'
+    # day's file. Keeping runs inside 00:00-15:59 UTC makes the UTC date equal
+    # to the Beijing date.
+    # GitHub delays or drops scheduled runs at busy slots (13 min - 2h17m measured,
+    # and whole days with no run), so retry hourly and skip when today's exists.
+    - cron: '7 * * * *'
   workflow_dispatch:      # Allow manual trigger
 
 jobs:
+  check_existing:
+    runs-on: ubuntu-latest
+    outputs:
+      exists: ${{ steps.check.outputs.exists }}
+    steps:
+      - id: check
+        run: |
+          url="https://xuelinghun000.github.io/Horizon/$(date -u +%Y/%m/%d)/summary-zh.html"
+          if curl -sfI "$url" >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
   daily-summary:
+    needs: check_existing
+    if: needs.check_existing.outputs.exists != 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Needed to commit changes
