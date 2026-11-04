@@ -13,7 +13,8 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from rich.console import Console
 
 from ..ai.summarizer import DailySummarizer
-from ..models import Config, ContentItem
+from ..ai.errors import AIProviderUnavailableError
+from ..models import AIProvider, Config, ContentItem
 from ..orchestrator import HorizonOrchestrator
 from ..processing import ProfileRegistry
 from .errors import HorizonMcpError
@@ -241,9 +242,21 @@ class HorizonPipelineService:
 
         warnings: list[str] = []
         missing_env: list[str] = []
+        auth_status: dict | None = None
 
         if check_env:
-            required = [ctx.config.ai.api_key_env]
+            required = []
+            if ctx.config.ai.provider == AIProvider.OPENAI_CHATGPT:
+                from ..ai.chatgpt_auth import ChatGPTAuth
+                try:
+                    auth_status = ChatGPTAuth().status(ctx.config.ai.chatgpt_account)
+                except (AIProviderUnavailableError, OSError) as exc:
+                    auth_status = {"connected": False, "plan_usage": False}
+                    warnings.append(str(exc))
+                if not auth_status["plan_usage"]:
+                    warnings.append("ChatGPT plan usage is not connected; run horizon-chatgpt login.")
+            elif ctx.config.ai.provider != AIProvider.OLLAMA:
+                required.append(ctx.config.ai.api_key_env)
             for key in required:
                 if not os.getenv(key):
                     missing_env.append(key)
@@ -268,6 +281,7 @@ class HorizonPipelineService:
                 "model": ctx.config.ai.model,
                 "languages": list(ctx.config.ai.languages),
                 "api_key_env": ctx.config.ai.api_key_env,
+                **({"auth": auth_status} if auth_status is not None else {}),
             },
             "collection": {
                 "time_window_hours": ctx.config.collection.time_window_hours,
@@ -367,6 +381,7 @@ class HorizonPipelineService:
         if not items:
             raise HorizonMcpError(code="HZ_EMPTY_INPUT", message="No items available for scoring.")
 
+        self._bind_chatgpt_account(ctx, run_id)
         orchestrator = self._orchestrator(ctx)
         scored_items = await orchestrator.analyze_items(items)
 
@@ -408,6 +423,8 @@ class HorizonPipelineService:
             config_path=config_path,
         )
 
+        if topic_dedup and len(items) > 1:
+            self._bind_chatgpt_account(ctx, run_id)
         orchestrator = self._orchestrator(ctx)
         filtering_result = await orchestrator.select_digest_items(
             items,
@@ -479,6 +496,7 @@ class HorizonPipelineService:
         if not items:
             raise HorizonMcpError(code="HZ_EMPTY_INPUT", message="No items available for enrichment.")
 
+        self._bind_chatgpt_account(ctx, run_id)
         orchestrator = self._orchestrator(ctx)
         enrichment_result = await orchestrator.enrich_items(items)
 
@@ -694,6 +712,20 @@ class HorizonPipelineService:
             ) from exc
         items = dicts_to_items(payload)
         return items, ctx
+
+    def _bind_chatgpt_account(self, ctx: PipelineContext, run_id: str) -> None:
+        """Persist only the selected registration ID across separate MCP stages."""
+        if ctx.config.ai.provider != AIProvider.OPENAI_CHATGPT:
+            return
+        from ..ai.chatgpt_auth import ChatGPTAuth
+        meta = self.run_store.load_meta(run_id)
+        account = meta.get("chatgpt_account") or ctx.config.ai.chatgpt_account
+        session = ChatGPTAuth().status(account)
+        if not session["plan_usage"]:
+            raise AIProviderUnavailableError("ChatGPT plan usage is not connected. Run horizon-chatgpt login.")
+        ctx.config.ai.chatgpt_account = session["client_id"]
+        if not meta.get("chatgpt_account"):
+            self.run_store.update_meta(run_id, {"chatgpt_account": session["client_id"]})
 
     def _orchestrator(self, ctx: PipelineContext) -> HorizonOrchestrator:
         storage = make_storage(ctx.config_path)

@@ -4,6 +4,7 @@ import asyncio
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
+from functools import cached_property
 from pathlib import Path
 from typing import Dict, List, Literal, Optional
 from urllib.parse import unquote_plus, urlsplit
@@ -28,7 +29,8 @@ from .scrapers.openbb import OpenBBScraper
 from .scrapers.ossinsight import OSSInsightScraper
 from .scrapers.gdelt import GDELTScraper
 from .scrapers.google_news import GoogleNewsScraper
-from .ai.client import create_ai_client
+from .ai.client import AIClient, create_ai_client
+from .ai.errors import AIProviderUnavailableError
 from .ai.analyzer import ContentAnalyzer
 from .ai.summarizer import DailySummarizer
 from .ai.enricher import ContentEnricher, EnrichmentBatchResult
@@ -230,6 +232,11 @@ class HorizonOrchestrator:
             else None
         )
         self.last_fetch_report: Optional[FetchReport] = None
+
+    @cached_property
+    def ai_client(self) -> AIClient:
+        """Share one client and account selection across the run's AI stages."""
+        return create_ai_client(self.config.ai)
 
     async def run(self, force_hours: int = None) -> None:
         """Execute the complete workflow.
@@ -672,7 +679,7 @@ class HorizonOrchestrator:
         items_text = "\n\n".join(lines)
 
         try:
-            ai_client = create_ai_client(self.config.ai)
+            ai_client = self.ai_client
             response = await ai_client.complete(
                 system=TOPIC_DEDUP_SYSTEM,
                 user=TOPIC_DEDUP_USER.format(items=items_text),
@@ -684,6 +691,8 @@ class HorizonOrchestrator:
                 return items
 
             duplicate_groups = result.get("duplicates", [])
+        except AIProviderUnavailableError:
+            raise
         except Exception as e:
             if log:
                 self.console.print(f"[yellow]  dedup: AI call failed ({e}), skipping[/yellow]")
@@ -1077,7 +1086,7 @@ class HorizonOrchestrator:
         self.console.print(
             f"   Re-analyzing {len(expanded)} Twitter items with reply context...\n"
         )
-        ai_client = create_ai_client(self.config.ai)
+        ai_client = self.ai_client
         analyzer = ContentAnalyzer(
             ai_client, self.profiles, console=self.console,
             concurrency=self.config.ai.analysis_concurrency,
@@ -1100,7 +1109,7 @@ class HorizonOrchestrator:
         self.console.print(
             f"{self.icons['enrich']} Enriching with background knowledge..."
         )
-        ai_client = create_ai_client(self.config.ai)
+        ai_client = self.ai_client
         enricher = ContentEnricher(
             ai_client,
             self.profiles,
@@ -1132,7 +1141,7 @@ class HorizonOrchestrator:
         """
         self.console.print(f"{self.icons['ai']} Analyzing content with AI...")
 
-        ai_client = create_ai_client(self.config.ai)
+        ai_client = self.ai_client
         analyzer = ContentAnalyzer(
             ai_client, self.profiles, console=self.console,
             concurrency=self.config.ai.analysis_concurrency,

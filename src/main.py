@@ -14,6 +14,7 @@ from .console_icons import get_icons
 from .logging_config import configure_logging
 from .storage.manager import ConfigError, StorageManager
 from .orchestrator import HorizonOrchestrator
+from .models import AIProvider
 
 
 console = Console(stderr=True)
@@ -99,6 +100,9 @@ def main():
             sys.exit(1)
 
         icons = get_icons(config.display.icon_style)
+        if config.ai.provider == AIProvider.OPENAI_CHATGPT:
+            from .ai.chatgpt_auth import MANAGE_USAGE_URL
+            console.print(f"Using ChatGPT plan. Manage usage: {MANAGE_USAGE_URL}")
 
         # Create and run orchestrator
         orchestrator = HorizonOrchestrator(config, storage, console=console)

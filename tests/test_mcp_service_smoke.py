@@ -282,7 +282,7 @@ def test_filter_items_uses_public_filtering_pipeline_api(tmp_path: Path, monkeyp
             [make_item("item-1", score=9.0), make_item("item-2", score=8.0)],
             SimpleNamespace(
                 config_path=tmp_path / "config.json",
-                config=SimpleNamespace(digest=SimpleNamespace()),
+                config=SimpleNamespace(ai=SimpleNamespace(provider="openai"), digest=SimpleNamespace()),
             ),
         ),
     )
@@ -373,6 +373,7 @@ def test_filter_items_matches_native_filtering_pipeline(tmp_path: Path, monkeypa
     service.run_store.create_run("run-parity")
     filtering = DigestConfig(max_items=1)
     config = SimpleNamespace(
+        ai=SimpleNamespace(provider="openai"),
         digest=filtering,
         processing=ProcessingConfig(
             profile_settings={
@@ -591,7 +592,7 @@ def test_enrich_items_propagates_batch_failure(tmp_path: Path, monkeypatch) -> N
             raise RuntimeError("enrichment failed")
 
     ctx = SimpleNamespace(
-        config=SimpleNamespace(ai=SimpleNamespace(languages=["en"])),
+        config=SimpleNamespace(ai=SimpleNamespace(provider="openai", languages=["en"])),
     )
     monkeypatch.setattr(service, "_load_stage_items", lambda **kwargs: ([item], ctx))
     monkeypatch.setattr(service, "_orchestrator", lambda loaded_ctx: FailingOrchestrator())
@@ -616,7 +617,7 @@ def test_enrich_items_reports_partial_failure_truthfully(
             )
 
     ctx = SimpleNamespace(
-        config=SimpleNamespace(ai=SimpleNamespace(languages=["en"])),
+        config=SimpleNamespace(ai=SimpleNamespace(provider="openai", languages=["en"])),
     )
     monkeypatch.setattr(
         service,
@@ -653,7 +654,7 @@ def test_enrich_items_does_not_create_stage_when_all_items_fail(
                 failures={item.id: "ValueError: empty story"}
             )
 
-    ctx = SimpleNamespace(config=SimpleNamespace())
+    ctx = SimpleNamespace(config=SimpleNamespace(ai=SimpleNamespace(provider="openai")))
     monkeypatch.setattr(service, "_load_stage_items", lambda **kwargs: ([item], ctx))
     monkeypatch.setattr(service, "_orchestrator", lambda loaded_ctx: FailingOrchestrator())
 

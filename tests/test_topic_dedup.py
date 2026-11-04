@@ -4,8 +4,10 @@ from datetime import datetime, timezone
 from types import SimpleNamespace
 
 from rich.console import Console
+import pytest
 
 import src.orchestrator as orchestrator_module
+from src.ai.errors import AIProviderUnavailableError
 from src.models import (
     ClassificationResult,
     ContentAnalysis,
@@ -127,3 +129,14 @@ def test_comment_only_duplicate_keeps_source_label(monkeypatch) -> None:
     parts = split_content(result[0].content)
     assert parts.main == "article"
     assert parts.comments == "--- From hackernews ---\n[reader]: useful comment"
+
+
+def test_account_failure_stops_dedup_instead_of_continuing_pipeline(monkeypatch):
+    async def complete(**kwargs):
+        raise AIProviderUnavailableError("ChatGPT plan usage limit reached")
+
+    monkeypatch.setattr(orchestrator_module, "create_ai_client", lambda _: SimpleNamespace(complete=complete))
+    orchestrator = HorizonOrchestrator.__new__(HorizonOrchestrator)
+    orchestrator.config = SimpleNamespace(ai=None)
+    with pytest.raises(AIProviderUnavailableError):
+        asyncio.run(orchestrator.merge_topic_duplicates([make_item("one", 9), make_item("two", 8)], log=False))

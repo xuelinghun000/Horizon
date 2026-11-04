@@ -6,14 +6,15 @@ from typing import List, Optional
 from pydantic import ValidationError
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, MofNCompleteColumn
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, retry_if_exception_type, retry_if_not_exception_type, stop_after_attempt, wait_exponential
 
 logger = logging.getLogger(__name__)
 
 from .client import AIClient
 from .classifier import ContentClassifier
 from .prompting.analysis import analysis_system_prompt, analysis_user_prompt
-from .utils import parse_json_response
+from .utils import gather_ai_tasks, parse_json_response
+from .errors import AIProviderUnavailableError
 from ..models import ContentAnalysis, ContentItem
 from ..processing.content import select_content, split_content
 from ..processing.profiles import ProfileRegistry
@@ -53,6 +54,8 @@ class ContentAnalyzer:
             async with semaphore:
                 try:
                     await self._analyze_item(item)
+                except AIProviderUnavailableError:
+                    raise
                 except Exception as e:
                     logger.error("Error analyzing item %s: %s", item.id, e)
                     if item.processing:
@@ -78,11 +81,12 @@ class ContentAnalyzer:
             coros = [
                 _process(item, i, task) for i, item in enumerate(items)
             ]
-            analyzed_items = await asyncio.gather(*coros)
+            analyzed_items = await gather_ai_tasks(coros)
 
         return analyzed_items
 
     @retry(
+        retry=retry_if_exception_type(Exception) & retry_if_not_exception_type(AIProviderUnavailableError),
         stop=stop_after_attempt(3),
         wait=wait_exponential(min=2, max=10)
     )

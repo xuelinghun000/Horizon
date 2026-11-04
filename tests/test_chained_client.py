@@ -177,7 +177,8 @@ def test_create_chained_client_parses_chain():
 
 def test_create_chained_client_uses_provider_defaults_without_leaking_base_url():
     """Every heterogeneous entry gets its own connection defaults."""
-    providers = list(AIProvider)
+    # ChatGPT requires a model selected from its account-specific catalog.
+    providers = [provider for provider in AIProvider if provider != AIProvider.OPENAI_CHATGPT]
     config = AIConfig(
         provider=AIProvider.OPENAI,
         provider_chain=",".join(provider.value for provider in providers),

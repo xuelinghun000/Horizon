@@ -16,9 +16,10 @@ from rich.progress import (
     TaskID,
     TextColumn,
 )
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, retry_if_exception_type, retry_if_not_exception_type, stop_after_attempt, wait_exponential
 
 from .client import AIClient
+from .errors import AIProviderUnavailableError
 from .localization import normalize_language
 from .prompting.enrichment import (
     MAX_TOOL_REQUESTS,
@@ -28,7 +29,7 @@ from .prompting.enrichment import (
     tool_planning_prompt,
     tool_results_text,
 )
-from .utils import parse_json_response
+from .utils import gather_ai_tasks, parse_json_response
 from ..models import ArtifactSource, ContentArtifact, ContentBlock, ContentItem
 from ..processing.profiles import LoadedProfile, ProfileBlock, ProfileRegistry
 from ..processing.tools import ToolRegistry, ToolResult
@@ -142,7 +143,10 @@ class ContentEnricher:
                         f"{', '.join(sorted(unknown))}"
                     )
 
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10), reraise=True)
+    @retry(
+        retry=retry_if_exception_type(Exception) & retry_if_not_exception_type(AIProviderUnavailableError),
+        stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10), reraise=True,
+    )
     async def _complete(self, **kwargs: Any) -> str:
         return await self.client.complete(**kwargs)
 
@@ -186,6 +190,8 @@ class ContentEnricher:
             async with semaphore:
                 try:
                     await self._enrich_item(item)
+                except AIProviderUnavailableError:
+                    raise
                 except Exception as exc:
                     logger.error("Error enriching item %s: %s", item.id, exc)
                     return item.id, exc
@@ -202,7 +208,7 @@ class ContentEnricher:
             console=self.console,
         ) as progress:
             task_id = progress.add_task("Enriching", total=len(items))
-            outcomes = await asyncio.gather(*(process(item, task_id) for item in items))
+            outcomes = await gather_ai_tasks([process(item, task_id) for item in items])
 
         return EnrichmentBatchResult(
             succeeded_ids=[item_id for item_id, exc in outcomes if exc is None],

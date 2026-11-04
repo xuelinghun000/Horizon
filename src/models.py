@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from enum import Enum
 import re
 from typing import Annotated, Literal, Optional, List, Dict, Any, NamedTuple, Union
-from pydantic import BaseModel, ConfigDict, HttpUrl, Field, field_validator
+from pydantic import BaseModel, ConfigDict, HttpUrl, Field, field_validator, model_validator
 
 
 class SourceType(str, Enum):
@@ -123,6 +123,7 @@ class AIProvider(str, Enum):
 
     ANTHROPIC = "anthropic"
     OPENAI = "openai"
+    OPENAI_CHATGPT = "openai-chatgpt"
     AZURE = "azure"
     ALI = "ali"
     GEMINI = "gemini"
@@ -135,13 +136,18 @@ class AIProvider(str, Enum):
 # Provider-specific defaults used by setup and provider-chain expansion.
 AI_PROVIDER_DEFAULTS = {
     AIProvider.ANTHROPIC: {
-        "model": "claude-3-5-sonnet-20241022",
+        "model": "claude-sonnet-5-5",
         "api_key_env": "ANTHROPIC_API_KEY",
         "base_url": None,
     },
     AIProvider.OPENAI: {
         "model": "gpt-4",
         "api_key_env": "OPENAI_API_KEY",
+        "base_url": None,
+    },
+    AIProvider.OPENAI_CHATGPT: {
+        "model": "",  # Selected from the signed-in account's model catalog.
+        "api_key_env": "",
         "base_url": None,
     },
     AIProvider.AZURE: {
@@ -192,6 +198,7 @@ class AIConfig(BaseModel):
     model: str
     base_url: Optional[str] = None
     api_key_env: str
+    chatgpt_account: Optional[str] = None
     extra_body: Optional[Dict[str, Any]] = None
     temperature: float = 0.3
     max_tokens: int = 4096
@@ -202,6 +209,30 @@ class AIConfig(BaseModel):
     # Azure OpenAI specific; required when provider == AZURE
     azure_endpoint_env: Optional[str] = None
     api_version: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def default_chatgpt_credentials(cls, value: Any) -> Any:
+        if isinstance(value, dict) and value.get("provider") == AIProvider.OPENAI_CHATGPT:
+            value = dict(value)
+            value.setdefault("api_key_env", "")
+        return value
+
+    @model_validator(mode="after")
+    def validate_chatgpt_settings(self) -> "AIConfig":
+        chain = [name.strip() for name in (self.provider_chain or "").split(",")]
+        if "openai-chatgpt" in chain and self.provider != AIProvider.OPENAI_CHATGPT:
+            raise ValueError("ChatGPT in provider_chain requires ai.provider=openai-chatgpt and its account-specific model")
+        if self.provider == AIProvider.OPENAI_CHATGPT:
+            if not self.model.strip():
+                raise ValueError("Choose a ChatGPT model using horizon-chatgpt models")
+            if self.base_url and self.base_url.rstrip("/") != "https://api.openai.com/v1":
+                raise ValueError("openai-chatgpt uses https://api.openai.com/v1; custom base_url is not supported")
+            if self.extra_body:
+                raise ValueError("ai.extra_body is not supported for openai-chatgpt preview requests")
+            if self.api_key_env:
+                raise ValueError("openai-chatgpt uses OAuth; leave api_key_env empty")
+        return self
 
     @field_validator("languages")
     @classmethod
@@ -238,6 +269,8 @@ class HackerNewsConfig(BaseModel):
 
 class ExtractorType(str, Enum):
     TRAFILATURA = "trafilatura"
+    FIRECRAWL = "firecrawl"
+    OUTCRAWL = "outcrawl"
 
 
 class TrafilaturaExtractorConfig(BaseModel):
@@ -246,8 +279,20 @@ class TrafilaturaExtractorConfig(BaseModel):
     favor_recall: bool = False
 
 
+class FirecrawlExtractorConfig(BaseModel):
+    type: Literal[ExtractorType.FIRECRAWL] = ExtractorType.FIRECRAWL
+    api_key_env: str = "FIRECRAWL_API_KEY"
+    only_main_content: bool = True
+
+
+class OutcrawlExtractorConfig(BaseModel):
+    type: Literal[ExtractorType.OUTCRAWL] = ExtractorType.OUTCRAWL
+    api_key_env: str = "OUTCRAWL_API_KEY"
+    only_main_content: bool = True
+
+
 ExtractorConfig = Annotated[
-    Union[TrafilaturaExtractorConfig],
+    Union[TrafilaturaExtractorConfig, FirecrawlExtractorConfig, OutcrawlExtractorConfig],
     Field(discriminator="type"),
 ]
 
